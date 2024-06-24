@@ -6,23 +6,31 @@ import pathlib
 
 import util
 
-def install_sage_math(): 
+def have_miniforge():
+    miniforge_dir = pathlib.Path.home() / pathlib.Path("miniforge3")
+    return miniforge_dir.is_dir()
+
+def install_miniforge(): 
     util.log_info("detecting system version")
 
     uname = str(util.check_shell_output("uname")).strip()
     uname_m = str(util.check_shell_output("uname -m")).strip()
 
     util.log_info(f"system versions - uname: {uname}, uname_m: {uname_m}")
+    util.log_info("installing miniforge with detected system version")
+
+    os.system(f"curl -L -O \"https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-{uname}-{uname_m}.sh\"")
+    os.system(f"bash Miniforge3-{uname}-{uname_m}.sh")
+
+    util.log_info("installed miniforge.")
+
+def install_sage_math():
+    util.log_info("installing sagemath")
 
     util.log_info("detecting python version")
     python_version = f"{sys.version_info.major}.{sys.version_info.minor}"
 
     util.log_info(f"python version: {python_version}")
-
-    util.log_info("installing sage-math with detected system and python version")
-
-    os.system(f"curl -L -O \"https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-{uname}-{uname_m}.sh\"")
-    os.system(f"bash Miniforge3-{uname}-{uname_m}.sh")
 
     os.system(f"mamba create -n sage sage python={python_version}")
 
@@ -64,9 +72,17 @@ def install_pulsar_requirements():
     util.log_info("done installing requirements for pulsar")
 
 if __name__ == '__main__':
+    if not have_miniforge():
+        util.log_info("did not detect miniforge. installing miniforge.")
+        install_miniforge()
+        util.log_error("please close this ssh session and start a new one.")
+        exit(0)
+
+    util.log_info("detected miniforge. proceeding.")
     install_sage_math()
     install_pulsar()
     install_pulsar_requirements()
+    util.log_info("all done! :-)")
     
 
 
