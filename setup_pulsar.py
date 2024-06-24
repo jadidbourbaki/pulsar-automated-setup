@@ -52,7 +52,7 @@ def install_pulsar():
 
     util.log_info("extracting pulsar")
 
-    os.system(f"unzip {home}/pulsar.zip")
+    os.system(f"unzip {home}/pulsar.zip -d {home}/pulsar")
 
     util.log_info("done installing pulsar")
 
