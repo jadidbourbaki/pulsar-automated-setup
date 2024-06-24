@@ -1,4 +1,5 @@
 import subprocess
+import pathlib
 
 class bcolors:
     HEADER = '\033[95m'
@@ -14,5 +15,11 @@ class bcolors:
 def log_info(s :str):
     print(f"{bcolors.OKGREEN}{s}{bcolors.ENDC}")
 
+def log_error(s : str):
+    print(f"{bcolors.FAIL}{s}{bcolors.ENDC}")
+
 def check_shell_output(cmd : str) -> str:
     return subprocess.check_output(cmd, shell=True)
+
+def get_home_directory() -> str:
+    return str(pathlib.Path.home())
