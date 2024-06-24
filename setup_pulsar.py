@@ -9,8 +9,8 @@ import util
 def install_sage_math(): 
     util.log_info("detecting system version")
 
-    uname = util.check_shell_output("uname")
-    uname_m = util.check_shell_output("uname -m")
+    uname = util.check_shell_output("uname").strip()
+    uname_m = util.check_shell_output("uname -m").strip()
 
     util.log_info(f"system versions - uname: {uname}, uname_m: {uname_m}")
 
