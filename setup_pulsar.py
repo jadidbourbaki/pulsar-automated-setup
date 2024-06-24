@@ -66,7 +66,7 @@ def install_pulsar_requirements():
         util.log_error("could not find a folder called 'pulsar' in home directory")
         return
     
-    os.system("python3 -m pip install -r {home}/pulsar/requirements.txt")
+    os.system(f"python3 -m pip install -r {home}/pulsar/requirements.txt")
     os.system("python3 -m pip install torch torchvision torchaudio")
 
     util.log_info("done installing requirements for pulsar")
