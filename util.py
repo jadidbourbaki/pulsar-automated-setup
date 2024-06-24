@@ -19,7 +19,7 @@ def log_error(s : str):
     print(f"{bcolors.FAIL}{s}{bcolors.ENDC}")
 
 def check_shell_output(cmd : str) -> str:
-    return subprocess.check_output(cmd, shell=True)
+    return subprocess.check_output(cmd, shell=True, text=True)
 
 def get_home_directory() -> str:
     return str(pathlib.Path.home())
